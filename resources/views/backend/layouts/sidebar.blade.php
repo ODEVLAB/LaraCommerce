@@ -134,6 +134,27 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a data-toggle="collapse" href="#user">
+                        <i class="fas fa-users"></i>
+                        <p>Users</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="user">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('user.create') }}">
+                                    <span class="sub-item">New User</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user.index') }}">
+                                    <span class="sub-item">All Users</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a data-toggle="collapse" href="#cart">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Cart Management</p>
