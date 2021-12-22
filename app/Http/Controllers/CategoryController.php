@@ -67,12 +67,15 @@ class CategoryController extends Controller
             $slug = time().'-'.$slug;
         }
         $data['slug'] = $slug;
+        
         // dd($data);
-        if ($request->is_parent == 1) {
-            $data['parent_id'] = null;
-        }
-        // $data['is_parent'] = $request->input('parent_id', 0);
-        dd($data);
+        //if is_parent is 1 then Parent ID is Null
+        // if ($request->is_parent == 1) {
+        //     $data['parent_id'] = null;
+        // }
+        $data['is_parent'] = $request->input('is_parent', 0);
+        // dd($data);
+
         $status = Category::create($data);
         if ($status) {
             return redirect()->route('category.index')->with('success', 'Category Created Succesfully');
@@ -134,7 +137,7 @@ class CategoryController extends Controller
                 $data['parent_id'] = null;
             }
             $data['is_parent'] = $request->input('is_parent', 0);
-            // dd($data);
+            dd($data);
 
             $status = $category->fill($data)->save();
             if ($status) {

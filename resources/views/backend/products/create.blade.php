@@ -36,19 +36,13 @@
                                 <form method="POST" action="{{route('product.store') }}" class="horizontal-form">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Title <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="title" name="title" value="{{old('title') }}" placeholder="Title">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Summary <span class="text-danger">*</span></label>
-                                                <textarea name="summary" class="summernote" placeholder="Write Summary">{{old('summary') }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>File Upload <span class="text-danger">*</span></label>
                                                 <div class="input-group">
@@ -62,6 +56,13 @@
                                                 <div id="holder" style="margin-top:15px; max-height:100px;"></div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Summary <span class="text-danger">*</span></label>
+                                                <textarea name="summary" class="summernote" placeholder="Write Summary">{{old('summary') }}</textarea>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Description <span class="text-danger">*</span></label>
@@ -161,7 +162,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>File Upload</label>
                                                 <div class="input-group">
@@ -174,9 +175,11 @@
                                                 </div>
                                                 <div id="holder" style="margin-top:15px; max-height:100px;"></div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary">Submit</button>
+                                        </div> --}}
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary">Submit</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -210,7 +213,7 @@
                             } ,
                             success: function(response){
                                 // console.log(response);
-                                var html_option="<option value=''>-- Choose Child Category --- </option>";
+                                var html_option="<option value=''> - Choose Child Category - </option>";
                                 if(response.status){
                                     $('#child_cat_div').removeClass('d-none');
                                     $.each(response.data, function(id, title){
