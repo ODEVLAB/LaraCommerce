@@ -41,7 +41,7 @@
                                             <th>Summary</th>
                                             <th>Image</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th width="14%">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -57,6 +57,7 @@
                                                 </td>
 
                                                 <td>
+                                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#productID{{ $item->id }}" title="view" class="btn btn-xs btn-outline-secondary"> <i class="fas fa-eye"></i></a>
                                                     <a href="{{ route('product.edit', $item->id) }}" title="edit" class="btn btn-xs btn-outline-info"> <i class="fas fa-edit"></i></a>
                                                     <form class="float-left" action="{{ route('product.destroy', $item->id) }}" method="post">
                                                         @csrf
@@ -64,6 +65,76 @@
                                                         <a href="" title="delete" data-id="{{ $item->id }}" class="dltBtn btn btn-xs btn-outline-danger"> <i class="fas fa-trash"></i></a>
                                                     </form>
                                                 </td>
+
+                                                <div class="modal fade" id="productID{{ $item->id }}" tabindex="-1" role="dialog" aria-labelled="Modal" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        @php
+                                                            $product=\App\Models\Product::where('id', $item->id)->first();
+                                                        @endphp
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="ModalTitle">{{ $product->title }}</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <strong>Summary:</strong><br>
+                                                                <p>{!! html_entity_decode($product->summary) !!}</p>
+                                                                <strong>Description:</strong><br>
+                                                                <p>{!! html_entity_decode($product->description) !!}</p>
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <strong>Price:</strong>
+                                                                        <p>${{ number_format($product->price, 2) }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <strong>Discount:</strong>
+                                                                        <p>{{ $product->discount }}%</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <strong>Offer Price:</strong>
+                                                                        <p>${{ number_format($product->offer_price, 2) }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <strong>Category:</strong>
+                                                                        <p>{{\App\Models\Category::where('id', $product->cat_id)->value('title') }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <strong>Child Category:</strong>
+                                                                        <p>{{\App\Models\Category::where('id', $product->child_cat_id)->value('title') }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <strong>Brand:</strong>
+                                                                        <p>{{\App\Models\Brand::where('id', $product->brand_id)->value('title') }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong>Size:</strong>
+                                                                        <button class="btn btn-sm btn-success btn-border">{{ $product->size }}</button>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong>Stock:</strong>
+                                                                        <p>{{ $product->stock }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong>Conditions:</strong>
+                                                                        <button class="btn btn-sm btn-primary disabled btn-border">{{ $product->conditions }}</button>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong>Status:</strong>
+                                                                        <button class="btn btn-sm btn-warning disabled btn-border">{{ $product->status }}</button>
+                                                                    </div><br>
+                                                                    
+                                                                </div>
+                                                         
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save Changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -75,6 +146,7 @@
                 </div>
             </div>
         </div>
+
         @endsection
 
 

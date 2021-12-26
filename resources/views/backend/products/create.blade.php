@@ -39,7 +39,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Title <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="title" name="title" value="{{old('title') }}" placeholder="Title">
+                                                <input type="text" class="form-control" id="title" name="title" value="{{old('title') }}" placeholder="Product Title">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -48,7 +48,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
                                                       <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                                                        <i class="fa fa-picture-o"></i> Choose
+                                                        <i class="fa fa-picture-o"></i> Choose File
                                                       </a>
                                                     </span>
                                                     <input id="thumbnail" class="form-control" type="text" name="photo">
@@ -101,7 +101,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Category</label>
-                                                <select id="cat_id" name="category" class="form-control">
+                                                <select id="cat_id" name="cat_id" class="form-control">
                                                     <option value="">Choose Category...</option>
                                                     @foreach(\App\Models\Category::where('is_parent', 1)->get() as $pcat)
                                                         <option value="{{ $pcat->id}}">{{ $pcat->title }}</option>
@@ -112,7 +112,7 @@
                                         <div class="col-md-4 d-none" id="child_cat_div">
                                             <div class="form-group">
                                                 <label>Child Category</label>
-                                                <select id="child_cat_id" name="category" class="form-control">
+                                                <select id="child_cat_id" name="child_cat_id" class="form-control">
                                                 </select>
                                             </div>
                                         </div>
@@ -125,7 +125,6 @@
                                                     <option value="M" {{old('size')=='M' ? 'selected' : ''}}>Medium</option>
                                                     <option value="L" {{old('size')=='L' ? 'selected' : ''}}>Large</option>
                                                     <option value="XL" {{old('size')=='XL' ? 'selected' : ''}}>Extra Large</option>
-
                                                 </select>
                                             </div>
                                         </div>
@@ -157,25 +156,11 @@
                                                 <label >Status</label>
                                                 <select name="status" class="form-control">
                                                     <option selected>Choose Status...</option>
-                                                    <option value="new" {{old('status')=='active' ? 'selected' : ''}}>Active</option>
-                                                    <option value="popular" {{old('status')=='inactive' ? 'selected' : ''}}>Inactive</option>
+                                                    <option value="active" {{old('status')=='active' ? 'selected' : ''}}>Active</option>
+                                                    <option value="inactive" {{old('status')=='inactive' ? 'selected' : ''}}>Inactive</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>File Upload</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                      <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                                                        <i class="fa fa-picture-o"></i> Choose
-                                                      </a>
-                                                    </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo">
-                                                </div>
-                                                <div id="holder" style="margin-top:15px; max-height:100px;"></div>
-                                            </div>
-                                        </div> --}}
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <button class="btn btn-primary">Submit</button>

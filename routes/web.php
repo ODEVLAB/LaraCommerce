@@ -39,10 +39,12 @@ Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {
     Route::post('brand_status', [\App\Http\Controllers\BrandController::class, 'brandStatus'])->name('brand.status');
 
     Route::post('category/{id}/child', [\App\Http\Controllers\CategoryController::class, 'getChildByParentID']);
+   
     //Product Management
     Route::resource('/product', \App\Http\Controllers\ProductController::class);
     Route::post('product_status', [\App\Http\Controllers\ProductController::class, 'productStatus'])->name('product.status');
 
+    //User Management
     Route::resource('/user', \App\Http\Controllers\UserController::class);
     Route::post('user_status', [\App\Http\Controllers\UserController::class, 'userStatus'])->name('user.status');
 });

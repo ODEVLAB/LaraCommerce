@@ -80,12 +80,12 @@
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('brand.create') }}">
-                                    <span class="sub-item">New Banner</span>
+                                    <span class="sub-item">New Brand</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('brand.index') }}">
-                                    <span class="sub-item">All Banners</span>
+                                    <span class="sub-item">All Brands</span>
                                 </a>
                             </li>
                         </ul>
