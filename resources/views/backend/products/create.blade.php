@@ -90,7 +90,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Brand</label>
-                                                <select name="brand" class="form-control">
+                                                <select name="brand_id" class="form-control">
                                                     <option value="">Choose Brand...</option>
                                                     @foreach(\App\Models\Brand::get() as $brand)
                                                         <option value="{{ $brand->id}}">{{ $brand->title }}</option>
@@ -143,7 +143,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label >Vendors</label>
-                                                <select name="vendors" class="form-control">
+                                                <select name="vendor_id" class="form-control">
                                                     <option selected>Choose Vendors...</option>
                                                     @foreach(\App\Models\User::where('role', 'vendor')->get() as $vendor)
                                                         <option value="{{ $vendor->id}}">{{ $vendor->full_name }}</option>

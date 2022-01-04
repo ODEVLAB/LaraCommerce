@@ -46,11 +46,14 @@
                                         </thead>
                                         <tbody>
                                         @foreach($products as $item)
+                                        @php
+                                            $photo =  explode(',',$item->photo);
+                                        @endphp
                                             <tr>
                                                 <td>{{ $item->title}}</td>
                                                 <td>{{ $item->slug}}</td>
                                                 <td>{!!html_entity_decode($item->summary)!!}</td>
-                                                <td><img src="{{$item->photo}}" alt="banner-img" style="max-height: 90px; max-width: 120px;"></td>
+                                                <td><img src="{{$photo[0]}}" alt="banner-img" style="max-height: 90px; max-width: 120px;"></td>
 
                                                 <td>
                                                     <input type="checkbox" name="toogle" data-toggle="toggle" value="{{$item->id}}" {{$item->status == 'active' ? 'checked' : ''}} data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">
@@ -108,11 +111,15 @@
                                                                         <strong>Brand:</strong>
                                                                         <p>{{\App\Models\Brand::where('id', $product->brand_id)->value('title') }}</p>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <strong>Size:</strong>
                                                                         <button class="btn btn-sm btn-success btn-border">{{ $product->size }}</button>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
+                                                                        <strong>Vendor:</strong>
+                                                                        <p>{{ \App\Models\User::where('id', $product->vendor_id)->value('full_name') }}</p>
+                                                                    </div>
+                                                                    <div class="col-md-4">
                                                                         <strong>Stock:</strong>
                                                                         <p>{{ $product->stock }}</p>
                                                                     </div>
@@ -130,7 +137,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save Changes</button>
+                                                                <a href="{{ route('product.edit', $item->id) }}" type="button" class="btn btn-primary">Edit Product</a>
                                                             </div>
                                                         </div>
                                                     </div>

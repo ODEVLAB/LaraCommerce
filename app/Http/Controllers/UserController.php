@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -37,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.user.create');
     }
 
     /**
@@ -48,7 +49,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $this->validate($request, [
+            'full_name' => 'string|required',
+            'username' => 'string|nullable',
+            'email' => 'email|required|unique:users,email',
+            'password' => 'min:4|required',
+            'phone' => 'string|nullable',
+            'photo' => 'required',
+            'address' => 'string|nullable',
+            'role' => 'in:admin,customer,vendor',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $data = $request->all();
+
+        // dd($data);
+        $data['password'] = Hash::make($request->password);
+
+        $status = User::create($data);
+        if($status){
+            return redirect()->route('user.index')->with('success', 'User Successfully Created');
+        }else {
+            return back()->with('error', 'Something Went Wrong');
+        }
     }
 
     /**
@@ -70,7 +94,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            return view('backend.user.edit', compact('user'));
+        } else {
+            return back()->with('error', 'User Not Found');
+        }
     }
 
     /**

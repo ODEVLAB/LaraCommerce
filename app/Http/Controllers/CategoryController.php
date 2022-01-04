@@ -137,7 +137,7 @@ class CategoryController extends Controller
                 $data['parent_id'] = null;
             }
             $data['is_parent'] = $request->input('is_parent', 0);
-            dd($data);
+            // dd($data);
 
             $status = $category->fill($data)->save();
             if ($status) {

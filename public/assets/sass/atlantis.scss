@@ -78,14 +78,14 @@ danger-color : #f3545d
 
 -------------------------------------------------------------------*/
  
-@import "atlantis/variables";
-@import "atlantis/outlinefocus";
-@import "atlantis/typography";
-@import "atlantis/opacity";
+@import "atlantis/_variables";
+@import "atlantis/_outlinefocus";
+@import "atlantis/_typography";
+@import "atlantis/_opacity";
 
 //layouts
-@import "atlantis/layouts";
-@import "atlantis/layouts-colors";
+@import "atlantis/_layouts";
+@import "atlantis/_layouts-colors";
 
 //components
 @import "atlantis/components";
@@ -94,8 +94,8 @@ danger-color : #f3545d
 @import "atlantis/plugins";
 
 //responsive
-@import "atlantis/responsive";
+@import "atlantis/_responsive";
 
 //Background
-@import "atlantis/background";
+@import "atlantis/_background";
 

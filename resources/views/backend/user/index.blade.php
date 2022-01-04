@@ -45,7 +45,7 @@
                                             <th>Address</th>
                                             <th>Role</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th width="15%">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -63,15 +63,65 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{ route('product.edit', $item->id) }}" title="edit" class="btn btn-xs btn-outline-info"> <i class="fas fa-eye"></i></a>
-                                                    <a href="{{ route('user.edit', $item->id) }}" title="edit" class="btn btn-sm btn-outline-info float-left"> <i class="fas fa-edit"></i></a>
-                                                    <form class="float-left ml-2" action="{{ route('user.destroy', $item->id) }}" method="post">
+                                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#userID{{ $item->id }}" title="view" class="btn btn-xs btn-outline-secondary"> <i class="fas fa-eye"></i></a>
+                                                    <a href="{{ route('user.edit', $item->id) }}" title="edit" class="btn btn-xs btn-outline-info float-left"> <i class="fas fa-edit"></i></a>
+                                                    <form class="float-left" action="{{ route('user.destroy', $item->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <a href="" title="delete" data-id="{{ $item->id }}"class="dltBtn btn btn-sm btn-outline-danger"> <i class="fas fa-trash"></i></a>
+                                                        <a href="" title="delete" data-id="{{ $item->id }}"class="dltBtn btn btn-xs btn-outline-danger"> <i class="fas fa-trash"></i></a>
                                                     </form>
-
                                                 </td>
+
+                                                    <div class="modal fade" id="userID{{ $item->id }}" tabindex="-1" role="dialog" aria-labelled="Modal" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            @php
+                                                                $user=\App\Models\User::where('id', $item->id)->first();
+                                                            @endphp
+                                                            <div class="modal-content">
+                                                                <div class="text-center">
+                                                                    <img src="{{ $user->photo }}" style="border-radius: 50%; margin: 5% 0;" alt="User-IMG">
+                                                                </div>
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="ModalTitle">{{ \Illuminate\Support\Str::upper($user->full_name) }}</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <strong>Username:</strong>
+                                                                            <p>{{ $user->username }}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <strong>Email:</strong>
+                                                                            <p>{{ $user->email }}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <strong>Phone:</strong>
+                                                                            <p>{{ $user->phone }}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <strong>Address:</strong>
+                                                                            <p>{{ $user->address }}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <strong>Role:</strong>
+                                                                            <p>{{ $user->role }}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <strong>Status:</strong>
+                                                                            <button class="btn btn-sm btn-warning disabled btn-border">{{ $user->status }}</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                    {{-- <button type="button" class="btn btn-primary">Save Changes</button> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             </tr>
                                         @endforeach
                                         </tbody>

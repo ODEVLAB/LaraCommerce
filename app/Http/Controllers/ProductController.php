@@ -52,21 +52,23 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string',
-            // 'summary' => 'required|string',
+            'summary' => 'required|string|between:30,400',
             'description' => 'nullable|min:3|max:2000',
             'stock' => 'numeric|nullable',
             'price' => 'numeric|nullable',
             'discount' => 'numeric|nullable',
+            // 'photo' => 'required|image|mimes:png,jpg,jpeg,svg',
             'photo' => 'required',
-            'brand_id' => 'required|exists:brands,id',
-            // 'cat_id' => 'required|exists:categories,id',
-            // 'child_cat_id' => 'nullable|exists:categories,id',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'cat_id' => 'required|integer|exists:categories,id',
+            'child_cat_id' => 'nullable|exists:categories,id',
+            // 'vendor_id' => 'required|integer|exists:vendors,id',
             'size' => 'nullable|in:S,M,L,XL',
             'conditions' => 'nullable|in:new,popular,winter',
             'status' => 'required|in:active,inactive',
         ]);
         $data = $request->all();
-        dd($data);
+        // dd($data);
 
         $slug = Str::slug($request->input('title'));
         $slug_count = Product::where('slug', $slug)->count();
@@ -76,7 +78,8 @@ class ProductController extends Controller
         $data['slug'] = $slug;
         $data['offer_price'] = ($request->price - (($request->price * $request->discount)/100));
 
-        return $data;
+        // dd($data);
+
         $status = Product::create($data);
         if ($status) {
             return redirect()->route('product.index')->with('success', 'Product Created Succesfully');
@@ -127,7 +130,37 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $this->validate($request, [
+                'title' => 'required|string',
+                'summary' => 'required|string|between:30,400',
+                'description' => 'nullable|min:3|max:2000',
+                'stock' => 'numeric|nullable',
+                'price' => 'numeric|nullable',
+                'discount' => 'numeric|nullable',
+                'photo' => 'required',
+                'brand_id' => 'required|integer|exists:brands,id',
+                'cat_id' => 'required|integer|exists:categories,id',
+                'child_cat_id' => 'nullable|exists:categories,id',
+                // 'vendor_id' => 'required|integer|exists:vendors,id',
+                'size' => 'nullable|in:S,M,L,XL',
+                'conditions' => 'nullable|in:new,popular,winter',
+                'status' => 'required|in:active,inactive',
+            ]);
+            $data = $request->all(); 
+            // dd($data);
+            $data['offer_price'] = ($request->price - (($request->price * $request->discount)/100));
+            // dd($data);
+            $status = $product->fill($data)->save();
+            if ($status) {
+                return redirect()->route('product.index')->with('success', 'Product Updated Succesfully');
+            } else {
+                return back()->with('error', 'Something Went Wrong');
+            }
+            } else {
+                return back()->with('error', 'Data Not Found');
+        }
     }
 
     /**
@@ -138,6 +171,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $status = $product->delete();
+            if ($status) {
+                return redirect()->route('product.index')->with('success', 'Product Succesfully Deleted');
+            } else {
+                return back()->with('error', 'Something went wrong');
+            }
+        } else {
+            return back()->with('error', 'Data Not Found');
+        }
     }
 }

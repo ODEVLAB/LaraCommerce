@@ -52,7 +52,7 @@
                                                         <i class="fa fa-picture-o"></i> Choose File
                                                       </a>
                                                     </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo">
+                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$product->photo}}">
                                                 </div>
                                                 <div id="holder" style="margin-top:15px; max-height:100px;"></div>
                                             </div>
@@ -60,14 +60,14 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Summary <span class="text-danger">*</span></label>
-                                                <textarea name="summary" class="summernote" >{{$product->title}}</textarea>
+                                                <textarea name="summary" class="summernote" >{{$product->summary}}</textarea>
                                             </div>
                                         </div>
                                         
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Description <span class="text-danger">*</span></label>
-                                                <textarea name="description" class="summernote">{{$product->title}}</textarea>
+                                                <textarea name="description" class="summernote">{{$product->description}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -91,10 +91,10 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Brand</label>
-                                                <select name="brand" class="form-control">
+                                                <select name="brand_id" class="form-control">
                                                     <option value="">Choose Brand...</option>
                                                     @foreach(\App\Models\Brand::get() as $brand)
-                                                        <option value="{{ $brand->id}}" {{ old('brand_id') == $brand->id ? ' selected' : '' }}>{{ $brand->title }}</option>
+                                                        <option value="{{ $brand->id}}" {{ $brand->id == $product->brand_id ? ' selected' : '' }}>{{ $brand->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -105,7 +105,7 @@
                                                 <select id="cat_id" name="cat_id" class="form-control">
                                                     <option value="">Choose Category...</option>
                                                     @foreach(\App\Models\Category::where('is_parent', 1)->get() as $pcat)
-                                                        <option value="{{ $pcat->id}}">{{ $pcat->title }}</option>
+                                                        <option value="{{ $pcat->id}}" {{ $pcat->id == $product->cat_id ? 'selected' : '' }}>{{ $pcat->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -122,10 +122,10 @@
                                                 <label >Size</label>
                                                 <select name="size" class="form-control">
                                                     <option selected>Choose Size...</option>
-                                                    <option value="S" {{old('size')=='S' ? 'selected' : ''}}>Small</option>
-                                                    <option value="M" {{old('size')=='M' ? 'selected' : ''}}>Medium</option>
-                                                    <option value="L" {{old('size')=='L' ? 'selected' : ''}}>Large</option>
-                                                    <option value="XL" {{old('size')=='XL' ? 'selected' : ''}}>Extra Large</option>
+                                                    <option value="S" {{$product->size =='S' ? 'selected' : ''}}>Small</option>
+                                                    <option value="M" {{$product->size =='M' ? 'selected' : ''}}>Medium</option>
+                                                    <option value="L" {{$product->size =='L' ? 'selected' : ''}}>Large</option>
+                                                    <option value="XL" {{$product->size =='XL' ? 'selected' : ''}}>Extra Large</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -134,9 +134,9 @@
                                                 <label >Conditions</label>
                                                 <select name="conditions" class="form-control">
                                                     <option selected>Choose Conditions...</option>
-                                                    <option value="new" {{old('conditions')=='new' ? 'selected' : ''}}>New</option>
-                                                    <option value="popular" {{old('conditions')=='popular' ? 'selected' : ''}}>Popular</option>
-                                                    <option value="winter" {{old('conditions')=='winter' ? 'selected' : ''}}>Winter</option>
+                                                    <option value="new" {{$product->conditions =='new' ? 'selected' : ''}}>New</option>
+                                                    <option value="popular" {{$product->conditions =='popular' ? 'selected' : ''}}>Popular</option>
+                                                    <option value="winter" {{$product->conditions =='winter' ? 'selected' : ''}}>Winter</option>
 
                                                 </select>
                                             </div>
@@ -144,10 +144,10 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label >Vendors</label>
-                                                <select name="vendors" class="form-control">
+                                                <select name="vendor_id" class="form-control">
                                                     <option selected>Choose Vendors...</option>
                                                     @foreach(\App\Models\User::where('role', 'vendor')->get() as $vendor)
-                                                        <option value="{{ $vendor->id}}">{{ $vendor->full_name }}</option>
+                                                        <option value="{{ $vendor->id}}" {{ $vendor->id == $product->vendor_id ? 'selected' : ''}}>{{ $vendor->full_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -157,14 +157,14 @@
                                                 <label >Status</label>
                                                 <select name="status" class="form-control">
                                                     <option selected>Choose Status...</option>
-                                                    <option value="active" {{old('status')=='active' ? 'selected' : ''}}>Active</option>
-                                                    <option value="inactive" {{old('status')=='inactive' ? 'selected' : ''}}>Inactive</option>
+                                                    <option value="active" {{$product->status =='active' ? 'selected' : ''}}>Active</option>
+                                                    <option value="inactive" {{$product->status =='inactive' ? 'selected' : ''}}>Inactive</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <button class="btn btn-primary">Submit</button>
+                                                <button class="btn btn-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -186,6 +186,7 @@
             </script>
 
             <script>
+                var child_cat_id = {{ $product->child_cat_id }};
                 $('#cat_id').change(function(){
                     var cat_id = $(this).val();
                     // alert(cat_id);
@@ -203,7 +204,7 @@
                                 if(response.status){
                                     $('#child_cat_div').removeClass('d-none');
                                     $.each(response.data, function(id, title){
-                                        html_option +="<option value='"+id+"'>"+title+"</option>"
+                                        html_option +="<option value='"+id+"' "+(child_cat_id == id ? 'selected' : '')+">"+title+"</option>"
                                     });
                                 }
                                 else{
@@ -215,6 +216,9 @@
                         })
                     }
                 });
+                if(child_cat_id != null){
+                   $('cat_id').change();
+                }
             </script>
 @endsection
 
