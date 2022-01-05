@@ -18,6 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//FrontEnd Management Pages Start
+
+Routes::get('/', [\App\Http\Controllers\FrontEnd\IndexController::class, 'home'])->name('home');
+
+
+//FrontEnd Management Pages End
+
+
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

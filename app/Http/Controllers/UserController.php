@@ -111,7 +111,32 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            $this->validate($request, [
+                'full_name' => 'string|required',
+                'username' => 'string|nullable',
+                'email' => 'email|required|exists|unique:users,email',
+                'password' => 'min:4|required',
+                'phone' => 'string|nullable',
+                'photo' => 'required',
+                'address' => 'string|nullable',
+                'role' => 'in:admin,customer,vendor',
+                'status' => 'required|in:active,inactive',
+            ]);
+            $data = $request->all(); 
+            // dd($data);
+            $data['password'] = Hash::make($request->password);
+            
+            $status = $user->fill($data)->save();
+            if ($status) {
+                return redirect()->route('product.index')->with('success', 'Product Updated Succesfully');
+            } else {
+                return back()->with('error', 'Something Went Wrong');
+            }
+            } else {
+                return back()->with('error', 'Data Not Found');
+        }
     }
 
     /**
@@ -122,6 +147,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            $status = $user->delete();
+            if ($status) {
+                return redirect()->route('user.index')->with('success', 'User Succesfully Deleted');
+            } else {
+                return back()->with('error', 'Something went wrong');
+            }
+        } else {
+            return back()->with('error', 'Data Not Found');
+        }
     }
 }

@@ -37,56 +37,82 @@
                                     @csrf
                                     @method('patch')
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ $user->full_name }}">
+                                        </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Title</label>
-                                                <input type="text" class="form-control" id="title" value="{{$user->title}}" name="title" placeholder="Title">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="inputState">Condition</label>
-                                                <select name="condition" class="form-control">
-                                                    <option selected>Choose Condition...</option>
-                                                    <option value="user" {{$user->condition=='user' ? 'selected' : ''}}> user</option>
-                                                    <option value="promo" {{$user->condition=='promo' ? 'selected' : ''}}> Promo</option>
-                                                </select>
+                                                <label>Email Address</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>File Upload</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                      <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                                                        <i class="fa fa-picture-o"></i> Choose
-                                                      </a>
-                                                    </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{ $user->photo }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Password</label>
+                                                    <input type="password" class="form-control" id="password" name="password" value="{{ $user->password }}">
                                                 </div>
-                                                <div id="holder" style="margin-top:15px; max-height:100px;"></div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
+                                                </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone</label>
+                                                        <input type="number" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
+                                                    </div>
+                                                </div>
+                                            <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>File Upload</label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                        <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                                                            <i class="fa fa-picture-o"></i> Choose
+                                                        </a>
+                                                        </span>
+                                                            <input id="thumbnail" class="form-control" type="text" name="photo" value="{{ $user->photo }}">
+                                                        </div>
+                                                        <div id="holder" style="margin-top:15px; max-height:100px;"></div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputState">Role <span class="required">*</span></label>
+                                                    <select name="condition" class="form-control">
+                                                        <option selected>Choose Role...</option>
+                                                        <option value="Admin" {{$user->role =='admin' ? 'selected' : ''}}> Administrator</option>
+                                                        <option value="Customer" {{$user->role =='customer' ? 'selected' : ''}}> Customer</option>
+                                                        <option value="Vendor" {{$user->role =='vendor' ? 'selected' : ''}}> Vendor</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
                                                 <label >Status</label>
                                                 <select name="status" class="form-control">
                                                     <option selected>Choose Status...</option>
-                                                    <option value="active" {{$user->status=='active' ? 'selected' : ''}}>Active</option>
-                                                    <option value="inactive" {{$user->status=='inactive' ? 'selected' : ''}}>Inactive</option>
+                                                    <option value="active" {{$user->status =='active' ? 'selected' : ''}}>Active</option>
+                                                    <option value="inactive" {{$user->status =='inactive' ? 'selected' : ''}}>Inactive</option>
                                                 </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Description</label>
-                                                <textarea name="description" class="summernote form-control"  placeholder="Write Description">{{$user->description}}</textarea>
-                                            </div>
-                                        </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary">Update</button>
+                                        <button class="btn btn-primary">Update</button>
                                         </div>
-                                    </div>
+                                </div>
                                 </form>
                             </div>
                         </div>
